@@ -1,0 +1,8 @@
+Flask==2.3.2
+Flask_Cors==3.0.10
+lazypredict==0.2.12
+numpy==1.23.5
+pandas==2.0.1
+scikit_learn==1.2.2
+Werkzeug==2.3.4
+xgboost==1.7.5
