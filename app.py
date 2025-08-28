@@ -37,6 +37,7 @@ def predict():
         drm = request.form["DR_Method"]
         hcv = request.form["handle_categorical_variable"]
         # print(output_attribute)
+        print(request)
 
         df_init = preprocessing(dataset)
 

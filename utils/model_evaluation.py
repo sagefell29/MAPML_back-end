@@ -1,34 +1,54 @@
 import pandas as pd
 import numpy as np
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import root_mean_squared_error, mean_squared_error, r2_score, mean_absolute_error
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 
 def getResult_r(y_test, o):
-    a = []
-    for i in np.array(y_test):
-        a.append(float(i[0]))
+    # Ensure y_test is a flat numpy array of floats
+    y_test = np.array(y_test, dtype=float).ravel()
     final = []
-    for i in o:
-        rmse = mean_squared_error(y_test, i[1], squared=False)
-        mse = mean_squared_error(y_test, i[1], squared=True)
-        mae = mean_absolute_error(y_test, i[1])
-        r2 = r2_score(y_test, i[1])
-        final.append({'model': i[0], 'rmse': rmse, 'mse': mse, 'mae': mae,
-                     'r2': r2, "pred": list(i[1]), 'y_test': a})
+
+    for model_name, y_pred in o:
+        y_pred = np.array(y_pred, dtype=float).ravel()
+
+        rmse = root_mean_squared_error(y_test, y_pred)  # replaces root_mean_squared_error
+        mse = mean_squared_error(y_test, y_pred)
+        mae = mean_absolute_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+
+        final.append({
+            'model': model_name,
+            'rmse': rmse,
+            'mse': mse,
+            'mae': mae,
+            'r2': r2,
+            "pred": y_pred.tolist(),
+            'y_test': y_test.tolist()
+        })
     return final
 
 
 def getResult_c(y_test, o):
-    a = []
-    for i in np.array(y_test):
-        a.append(float(i[0]))
+    # Ensure y_test is a flat numpy array of floats
+    y_test = np.array(y_test, dtype=float).ravel()
     final = []
-    for i in o:
-        pred = [float(j) for j in i[1]]
-        acs = accuracy_score(y_test, i[1])
-        ps = precision_score(y_test, i[1], average='weighted')
-        rs = recall_score(y_test, i[1], average='weighted')
-        f1s = f1_score(y_test, i[1], average='weighted')
-        final.append({'model': i[0], 'acs': acs, 'ps': ps,
-                     'rs': rs, 'f1s': f1s, 'pred': pred, 'y_test': a})
+
+    for model_name, y_pred in o:
+        y_pred = np.array(y_pred, dtype=float).ravel()
+
+        acs = accuracy_score(y_test, y_pred)
+        ps = precision_score(y_test, y_pred, average='weighted', zero_division=0)
+        rs = recall_score(y_test, y_pred, average='weighted', zero_division=0)
+        f1s = f1_score(y_test, y_pred, average='weighted', zero_division=0)
+
+        final.append({
+            'model': model_name,
+            'acs': acs,
+            'ps': ps,
+            'rs': rs,
+            'f1s': f1s,
+            'pred': y_pred.tolist(),
+            'y_test': y_test.tolist()
+        })
     return final
