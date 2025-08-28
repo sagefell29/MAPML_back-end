@@ -52,7 +52,8 @@ Several design principles and architectural approaches were followed to ensure a
 1. **Data Processing:** The back end handles the core data processing tasks, such as data cleaning, transformation, and feature engineering, ensuring that the data is ready for machine learning.
 2. **Model Training:** This module manages the training of selected machine learning models using the processed data. It handles the training-validation splits and model hyperparameter tuning.
 3. **Result Generation:** The back end generates results in the form of evaluation metrics and visualizations, such as scatter plots comparing predicted and actual values, to provide users with insights into model performance.
-4. **Error Handling and Security:** The back end incorporates robust error handling mechanisms to ensure the reliability of the application. It performs input validation to prevent unauthorized access and malicious actions. Security measures are implemented to protect sensitive data and maintain the integrity of the system.
+4. **Classification Evaluation:** For classification tasks, the system provides comprehensive evaluation metrics including accuracy, precision, recall, F1-score, and confusion matrices to help users understand model performance across different classes.
+5. **Error Handling and Security:** The back end incorporates robust error handling mechanisms to ensure the reliability of the application. It performs input validation to prevent unauthorized access and malicious actions. Security measures are implemented to protect sensitive data and maintain the integrity of the system.
 
 ## Back-End Development Process 🛠️
 
@@ -87,6 +88,28 @@ To run the back-end server:
 - `error_handling/`: Includes custom error handling classes and functions.
 - `utils/`: Contains utility functions for data preprocessing, model evaluation, and more.
 - `data/`: Placeholder directory for datasets (not included in the repository).
+- `test_confusion_matrix.py`: Test script to verify confusion matrix functionality.
+
+## New Features 🆕
+
+### Confusion Matrix for Classification Tasks
+
+The latest update includes comprehensive confusion matrix functionality for classification tasks:
+
+- **Backend Enhancement:** The `getResult_c` function in `utils/model_evaluation.py` now calculates and returns confusion matrix data along with traditional metrics (accuracy, precision, recall, F1-score).
+- **Frontend Integration:** The `ConfusionMatrix` component displays a visually appealing confusion matrix with:
+  - Color-coded cells (green for correct predictions, gray for incorrect)
+  - Clear row and column labels with blue theme
+  - Always visible matrix for consistent PDF exports
+  - Responsive design that works on different screen sizes
+  - High contrast colors for better visibility and accessibility
+- **Data Structure:** The confusion matrix is returned as a 2D array with corresponding class labels, making it easy to interpret and visualize.
+- **PDF Export:** Confusion matrices are included in PDF exports for comprehensive result documentation.
+
+This feature helps users better understand:
+- Which classes are being predicted correctly vs. incorrectly
+- The distribution of prediction errors across different classes
+- Model performance patterns and potential areas for improvement
 
 ## Sister Repository 🤝
 
